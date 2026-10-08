@@ -1,12 +1,12 @@
-# 🚀 [Tips Hindawi](https://www.tipshindawi.com/) Internship (August–October) 2026
+# 🚀 [Tips Hindawi](https://www.tipshindawi.com/) Internship (August–October 2026)
 
-> This project was built during the [Tips Hindawi](https://www.tipshindawi.com/) **Internship (August–October 2026)**.
+> 🎓 This project was built during the [Tips Hindawi](https://www.tipshindawi.com/) Internship (August–October 2026).
 
 ## 👤 Participant
 
 | Field | Value |
 | --- | --- |
-| Full Name | Hoda Ashraf Mohamed Abdelghany|
+| Full Name | Hoda Ashraf Mohamed Abdelghany |
 | Project Name | AI Personal Tutor |
 | GitHub Username | [Hodhod-16](https://github.com/Hodhod-16) |
 | Internship Batch | August–October 2026 |
@@ -17,33 +17,38 @@
 
 # 📖 Project Overview
 
-AI Personal Tutor helps students study from their lecture PDFs. After uploading a text-based PDF, a student can ask questions about the lecture, receive an explanation with source page numbers, or generate a multiple-choice quiz from the full document. The app also checks the student's answers and shows a score with explanations.
+AI Personal Tutor helps students study from lecture PDFs. After uploading a text-based PDF, a student can ask questions about the lecture, request a short study guide, create flashcards, or generate an interactive multiple-choice quiz.
 
-The Streamlit interface sends the PDF and questions to a FastAPI service. The service runs in a Kaggle notebook, retrieves relevant lecture text, and uses a quantized Mistral-Nemo model to generate responses grounded in that text.
+The Streamlit app sends requests to a FastAPI service running in a Kaggle notebook. The service reads the PDF, retrieves lecture text, and uses a 4-bit quantized Mistral-Nemo model to generate answers grounded in that text.
 
 ---
 
 # ✨ Features
 
-* Upload a text-based lecture PDF and index its readable pages.
-* Ask questions about the lecture and receive answers with source page numbers.
-* Continue a conversation with short chat history for follow-up questions.
-* Generate a full-PDF multiple-choice quiz with a user-selected number of questions and an optional focus topic.
-* Answer quiz questions in the app and see the score and explanations.
-* Protect API requests with Bearer token authentication.
+- Upload and index a text-based lecture PDF.
+- Ask questions and follow up in a chat; answers include source page numbers.
+- Generate a short study guide with key points and source pages.
+- Create question-and-answer flashcards, reveal answers, and move between cards.
+- Generate a multiple-choice quiz from the full PDF, with an optional focus topic and a chosen question count.
+- Check quiz answers and view a score, explanations, and source pages.
+- Download the quiz and its answer key as Markdown files.
+- Protect API requests with Bearer token authentication.
 
 ---
 
 # 🛠️ Technologies Used
 
-* Python
-* PyTorch and Hugging Face Transformers
-* Mistral-Nemo-Instruct-2407 with 4-bit bitsandbytes quantization
-* LangChain: PyPDFLoader, CharacterTextSplitter, HuggingFaceEmbeddings, FAISS, PromptTemplate, and StructuredOutputParser
-* FastAPI and Uvicorn
-* pyngrok
-* Streamlit
-* Kaggle GPU for model inference
+- Python and PyTorch
+- Hugging Face Transformers
+- Mistral-Nemo-Instruct-2407
+- bitsandbytes 4-bit quantization
+- LangChain: PyPDFLoader, CharacterTextSplitter, HuggingFaceEmbeddings, FAISS, PromptTemplate, and StructuredOutputParser
+- FastAPI and Uvicorn
+- pyngrok
+- Streamlit
+- Kaggle GPU
+
+The project uses retrieval and prompting; the model is not fine-tuned.
 
 ---
 
@@ -51,81 +56,81 @@ The Streamlit interface sends the PDF and questions to a FastAPI service. The se
 
 ## Start the model API on Kaggle
 
-1. Open the project notebook in Kaggle and select a GPU accelerator if one is available.
-2. Attach the lecture PDF as a Kaggle dataset input.
-3. Add these two secrets in Kaggle **Add-ons → Secrets**. Use your own secret values; never put them in notebook code.
+1. Open the project notebook and enable a GPU accelerator.
+2. Attach a text-based lecture PDF dataset as notebook input. The notebook uses a PDF for its initial index; a PDF can also be uploaded through the app.
+3. Add these secret names in Kaggle Add-ons → Secrets, using your own values:
+   - CV_API_TOKEN
+   - NGROK_AUTHTOKEN
+4. Run the notebook cells in order. The final cells start FastAPI and ngrok and print the public base URL.
+5. Keep the Kaggle session and ngrok tunnel running while using the app. The public URL can change when a new tunnel starts.
 
-```text
-CV_API_TOKEN=your_private_api_token
-NGROK_AUTHTOKEN=your_ngrok_authtoken
-```
-
-4. Run the notebook cells from top to bottom. The final cells start FastAPI and the ngrok tunnel.
-5. Copy the printed **Public API URL**. Keep the Kaggle session running while using the app.
+Do not put real tokens in the notebook, README, or GitHub.
 
 ## Install and run the Streamlit app locally
 
-Open a terminal in the folder containing `app.py`, then install the app's Python packages:
+Open a terminal in the folder containing app.py, then install the frontend requirements:
 
-```bash
-pip install streamlit requests
-```
+~~~bash
+pip install -r requirements.txt
+~~~
 
 Start Streamlit:
 
-```bash
+~~~bash
 streamlit run app.py
-```
+~~~
+
+The theme file belongs in the .streamlit folder beside app.py:
+
+~~~text
+.streamlit/config.toml
+~~~
 
 ---
 
 # 🚀 Usage
 
-1. Start the Kaggle API and copy its public base URL. Use the URL without `/chat`, `/upload`, or another endpoint suffix.
-2. Open the Streamlit app and enter the API base URL and the matching `CV_API_TOKEN` in the sidebar.
-3. Upload a text-based PDF in the **Lecture PDF** section.
-4. In **Explain a topic**, ask a question about the lecture. The tutor returns an answer and the source page numbers it used.
-5. In **Create a quiz**, choose the number of questions and optionally enter a focus topic. Leave the topic blank for a broad quiz about the PDF.
-6. Select one answer for each question and submit to see your score and explanations.
-
-The ngrok URL can change when a new tunnel is started. Update the URL in the app when that happens.
+1. Start the Kaggle API and copy its public base URL. Enter the base URL in the app without an endpoint suffix such as /chat or /upload.
+2. Enter the matching CV_API_TOKEN in the sidebar.
+3. Upload a text-based PDF in the Lecture PDF area.
+4. Use Ask to ask questions and follow up. Answers include source pages.
+5. Use Study guide to create a summary and key points. A focus topic is optional.
+6. Use Flashcards to create question-and-answer cards, reveal answers, and navigate through them.
+7. Use Quiz to choose the question count and an optional topic, answer each question, and check the result.
+8. Download the quiz or the separate answer key from the Quiz tab.
 
 ---
 
 # 📸 Demo
 
-Add screenshots of the PDF upload, lecture explanation, and quiz results here. A short screen recording can also be linked here:
-
-```text
-Demo video: add link here
-```
+Screenshots and a short demo video can be added here after recording.
 
 ---
 
 # 📈 Results
 
-The app was manually tested with lecture PDFs. The tested workflow includes PDF upload and indexing, asking lecture questions with page citations, generating a quiz, submitting answers, and viewing the score and explanations.
+Manual checks confirmed the main workflow with a text-based lecture PDF: upload and indexing, question answering with page citations, quiz generation, answer checking, and scoring.
 
-No formal accuracy benchmark has been completed. Generated explanations and quiz questions can still contain mistakes, so students should check them against the lecture material.
+The study guide and flashcard endpoints have been added to the current implementation and need end-to-end validation in the active Kaggle session. No formal accuracy benchmark has been completed. Generated material can contain mistakes and should be checked against the lecture.
 
 ---
 
 # 🔮 Future Improvements
 
-* Add OCR support for scanned PDFs.
-* Evaluate answer and quiz quality on a labeled test set and improve the prompts based on measured errors.
-* Improve support for long PDFs and pages with little or repeated text.
-* Host the model API on a more persistent service so it does not depend on an active Kaggle session and ngrok tunnel.
+- Add OCR support for scanned PDFs.
+- Evaluate explanation and quiz quality on a labeled test set.
+- Improve handling of long PDFs and pages with little or repeated text.
+- Host the API on a persistent service so it does not depend on an active Kaggle session and ngrok tunnel.
 
 ---
 
 # 📚 About the Internship
 
-This project was developed as part of the [Tips Hindawi](https://www.tipshindawi.com/) **Internship (August–October 2026)**, and it will be showcased on the official [Tips Hindawi](https://www.tipshindawi.com/) website.
+This project was developed as part of the [Tips Hindawi](https://www.tipshindawi.com/) Internship (August–October 2026).
 
-[Tips Hindawi](https://www.tipshindawi.com/) is the internships department of [Edrak for AI](https://edrak4ai.com/en), and the internship encourages participants to build real-world projects, apply practical skills, and showcase their work through GitHub.
+Tips Hindawi is the internships department of [Edrak for AI](https://edrak4ai.com/en). The program encourages participants to build practical projects and showcase their work through GitHub.
 
-For more information about the internship, training programs, and upcoming batches, visit the official [Tips Hindawi](https://www.tipshindawi.com/) website.
+For more information about the internship, training programs, and upcoming batches, visit the [Tips Hindawi website](https://www.tipshindawi.com/).
 
 ---
 
