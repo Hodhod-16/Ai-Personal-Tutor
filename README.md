@@ -103,7 +103,13 @@ The theme file belongs in the .streamlit folder beside app.py:
 
 # 📸 Demo
 
-<img width="1298" height="915" alt="image" src="https://github.com/user-attachments/assets/3eaea32c-78e5-4c08-854b-c6de1db5e6e0" />
+
+
+https://github.com/user-attachments/assets/11b96e52-1301-452f-884c-de9e63666739
+
+
+
+
 
 
 ---
