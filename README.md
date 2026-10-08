@@ -105,7 +105,9 @@ The theme file belongs in the .streamlit folder beside app.py:
 
 
 
-https://github.com/user-attachments/assets/11b96e52-1301-452f-884c-de9e63666739
+
+
+https://github.com/user-attachments/assets/d6372285-7279-4839-a800-5723a3f61eec
 
 
 
